@@ -1,7 +1,7 @@
 {
     "name": "ecomsec/security-headers",
-    "description": "Security Headers Plugin for Shopware 6 - Adds essential security headers to protect your shop",
-    "version": "1.0.0",
+    "description": "Security Headers Plugin for Shopware 6 - Adds essential security headers like CSP, HSTS, and X-Frame-Options to protect your shop.",
+    "version": "1.0.1",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "shopware/core": ">=6.6.0"
+        "shopware/core": "~6.6.0 || ~6.7.0"
     },
     "extra": {
         "shopware-plugin-class": "EcomSec\\SecurityHeaders\\EcomSecSecurityHeaders",
@@ -20,8 +20,8 @@
             "en-GB": "EcomSec Security Headers"
         },
         "description": {
-            "de-DE": "Verbessert die Sicherheit durch Hinzufügen zusätzlicher Sicherheitsheader zu den standardmäßigen Shopware-Headern.",
-            "en-GB": "Improves security by adding extra security headers on top of the default Shopware ones."
+            "de-DE": "Schützen Sie Ihren Shop durch professionelle Security-Header wie CSP, HSTS und X-Frame-Options. Einfach konfigurierbar und Shopware 6.7 bereit.",
+            "en-GB": "Protect your shop with professional security headers like CSP, HSTS, and X-Frame-Options. Easy to configure and Shopware 6.7 ready."
         }
     },
     "autoload": {

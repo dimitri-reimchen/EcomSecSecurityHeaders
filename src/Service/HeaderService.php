@@ -3,16 +3,17 @@
 namespace EcomSec\SecurityHeaders\Service;
 
 use Shopware\Core\System\SystemConfig\SystemConfigService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class HeaderService
 {
-    public function addSecurityHeaders(Response $response, SystemConfigService $config, ?string $salesChannelId): void
+    public function addSecurityHeaders(Response $response, Request $request, SystemConfigService $config, ?string $salesChannelId): void
     {
         $this->addContentSecurityPolicy($response, $config, $salesChannelId);
         $this->addContentSecurityPolicyReportOnly($response, $config, $salesChannelId);
         $this->addPermissionsPolicy($response, $config, $salesChannelId);
-        $this->addStrictTransportSecurity($response, $config, $salesChannelId);
+        $this->addStrictTransportSecurity($response, $request, $config, $salesChannelId);
         $this->addXFrameOptions($response, $config, $salesChannelId);
         $this->addXContentTypeOptions($response, $config, $salesChannelId);
         $this->addReferrerPolicy($response, $config, $salesChannelId);
@@ -57,10 +58,10 @@ class HeaderService
         }
     }
 
-    private function addStrictTransportSecurity(Response $response, SystemConfigService $config, ?string $salesChannelId): void
+    private function addStrictTransportSecurity(Response $response, Request $request, SystemConfigService $config, ?string $salesChannelId): void
     {
-        // Nur HSTS-Header hinzufügen, wenn wir auf einer sicheren Verbindung sind
-        if (!$this->isSecureConnection()) {
+        // Use native Symfony method to check for secure connection
+        if (!$request->isSecure()) {
             return;
         }
         
@@ -69,7 +70,6 @@ class HeaderService
             return;
         }
 
-        // Nur hinzufügen, wenn noch nicht vorhanden
         if (!$response->headers->has("Strict-Transport-Security")) {
             $hstsValue = $config->get("EcomSecSecurityHeaders.config.hstsValue", $salesChannelId);
             if (!empty($hstsValue)) {
@@ -85,7 +85,6 @@ class HeaderService
             return;
         }
 
-        // Nur hinzufügen, wenn noch nicht vorhanden
         if (!$response->headers->has("X-Frame-Options")) {
             $xFrameOptionsValue = $config->get("EcomSecSecurityHeaders.config.xFrameOptionsValue", $salesChannelId);
             if (!empty($xFrameOptionsValue)) {
@@ -101,7 +100,6 @@ class HeaderService
             return;
         }
 
-        // Nur hinzufügen, wenn noch nicht vorhanden
         if (!$response->headers->has("X-Content-Type-Options")) {
             $xContentTypeOptionsValue = $config->get("EcomSecSecurityHeaders.config.xContentTypeOptionsValue", $salesChannelId);
             if (!empty($xContentTypeOptionsValue)) {
@@ -117,39 +115,11 @@ class HeaderService
             return;
         }
 
-        // Nur hinzufügen, wenn noch nicht vorhanden
         if (!$response->headers->has("Referrer-Policy")) {
             $referrerPolicyValue = $config->get("EcomSecSecurityHeaders.config.referrerPolicyValue", $salesChannelId);
             if (!empty($referrerPolicyValue)) {
                 $response->headers->set("Referrer-Policy", $referrerPolicyValue);
             }
         }
-    }
-
-    /**
-     * Prüft, ob die aktuelle Verbindung sicher (HTTPS) ist
-     */
-    private function isSecureConnection(): bool
-    {
-        // Verschiedene Möglichkeiten zur Erkennung einer HTTPS-Verbindung prüfen
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            return true;
-        }
-        
-        // Für Proxy-Setups
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-            return true;
-        }
-        
-        if (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on') {
-            return true;
-        }
-        
-        // Standard-Port für HTTPS
-        if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443') {
-            return true;
-        }
-        
-        return false;
     }
 }

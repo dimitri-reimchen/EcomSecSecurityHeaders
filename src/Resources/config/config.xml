@@ -11,8 +11,8 @@
         <input-field type="textarea">
             <name>cspValue</name>
             <label>CSP-Wert</label>
-            <defaultValue>Content-Security-Policy: default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;img-src 'self' data: https:;font-src 'self' https://fonts.gstatic.com data:;connect-src 'self';object-src 'none';base-uri 'self';frame-ancestors 'none';</defaultValue>
-            <helpText>Beispiel: default-src 'self' 'unsafe-inline' *; base-uri 'self';</helpText>
+            <defaultValue>default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';</defaultValue>
+            <helpText>Geben Sie nur die Direktiven an. Beispiel: default-src 'self'; base-uri 'self';</helpText>
         </input-field>
     </card>
     <card>
@@ -39,12 +39,10 @@
         <input-field type="textarea">
             <name>permissionsPolicyValue</name>
             <label>Permissions-Policy-Wert</label>
-            <defaultValue>camera=() , microphone=(), geolocation=(), interest-cohort=()</defaultValue>
+            <defaultValue>camera=(), microphone=(), geolocation=(), interest-cohort=()</defaultValue>
             <helpText>Beispiel: camera=(), microphone=(), geolocation=(), interest-cohort=()</helpText>
         </input-field>
     </card>
-    
-    <!-- NEUE HEADER -->
     <card>
         <title>Strict-Transport-Security (HSTS)</title>
         <input-field type="bool">
@@ -66,7 +64,6 @@
             <label>Aktivieren</label>
             <defaultValue>true</defaultValue>
         </input-field>
-        <!-- KORRIGIERT: type="single-select" statt "select" -->
         <input-field type="single-select">
             <name>xFrameOptionsValue</name>
             <label>X-Frame-Options-Wert</label>
@@ -94,7 +91,7 @@
             <name>xContentTypeOptionsValue</name>
             <label>X-Content-Type-Options-Wert</label>
             <defaultValue>nosniff</defaultValue>
-            <disabled>true</disabled> <!-- Es gibt nur 'nosniff' -->
+            <disabled>true</disabled>
         </input-field>
     </card>
     <card>
@@ -104,7 +101,6 @@
             <label>Aktivieren</label>
             <defaultValue>true</defaultValue>
         </input-field>
-        <!-- KORRIGIERT: type="single-select" statt "select" -->
         <input-field type="single-select">
             <name>referrerPolicyValue</name>
             <label>Referrer-Policy-Wert</label>

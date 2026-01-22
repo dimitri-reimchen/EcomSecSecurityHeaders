@@ -25,31 +25,24 @@ class SecurityHeaderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            // Mittlere Priorität, um sicherzustellen, dass es nach den meisten Core-Subscribern,
-            // aber vor anderen Custom-Subscribern ausgeführt wird
             KernelEvents::RESPONSE => ["addSecurityHeaders", 0]
         ];
     }
 
     public function addSecurityHeaders(ResponseEvent $event): void
     {
-        // Nur für Hauptanfragen ausführen, nicht für Subanfragen
         if (!$event->isMainRequest()) {
             return;
         }
 
-        // Header für alle Antworten hinzufügen, nicht nur für erfolgreiche
-        // Dadurch werden auch Fehlerseiten und Weiterleitungen abgedeckt
         $response = $event->getResponse();
+        $request = $event->getRequest();
         
         try {
-            // SalesChannelId aus dem Request holen
-            $salesChannelId = $event->getRequest()->attributes->get(PlatformRequest::ATTRIBUTE_SALES_CHANNEL_ID);
+            $salesChannelId = $request->attributes->get(PlatformRequest::ATTRIBUTE_SALES_CHANNEL_ID);
             
-            // Konfiguration abrufen und Header hinzufügen
-            $this->headerService->addSecurityHeaders($response, $this->systemConfigService, $salesChannelId);
+            $this->headerService->addSecurityHeaders($response, $request, $this->systemConfigService, $salesChannelId);
         } catch (\Exception $e) {
-            // Fehler protokollieren, aber den Request nicht abbrechen
             error_log('SecurityHeaders Plugin Error: ' . $e->getMessage());
         }
     }
