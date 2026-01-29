@@ -27,7 +27,7 @@ class HeaderService
         }
 
         $cspValue = $config->get("EcomSecSecurityHeaders.config.cspValue", $salesChannelId);
-        if (!empty($cspValue) && !$response->headers->has("Content-Security-Policy")) {
+        if (!empty($cspValue) && is_string($cspValue) && !$response->headers->has("Content-Security-Policy")) {
             $response->headers->set("Content-Security-Policy", $cspValue);
         }
     }
@@ -40,7 +40,7 @@ class HeaderService
         }
 
         $cspReportOnlyValue = $config->get("EcomSecSecurityHeaders.config.cspReportOnlyValue", $salesChannelId);
-        if (!empty($cspReportOnlyValue) && !$response->headers->has("Content-Security-Policy-Report-Only")) {
+        if (!empty($cspReportOnlyValue) && is_string($cspReportOnlyValue) && !$response->headers->has("Content-Security-Policy-Report-Only")) {
             $response->headers->set("Content-Security-Policy-Report-Only", $cspReportOnlyValue);
         }
     }
@@ -53,7 +53,7 @@ class HeaderService
         }
 
         $permissionsPolicyValue = $config->get("EcomSecSecurityHeaders.config.permissionsPolicyValue", $salesChannelId);
-        if (!empty($permissionsPolicyValue) && !$response->headers->has("Permissions-Policy")) {
+        if (!empty($permissionsPolicyValue) && is_string($permissionsPolicyValue) && !$response->headers->has("Permissions-Policy")) {
             $response->headers->set("Permissions-Policy", $permissionsPolicyValue);
         }
     }
@@ -72,7 +72,7 @@ class HeaderService
 
         if (!$response->headers->has("Strict-Transport-Security")) {
             $hstsValue = $config->get("EcomSecSecurityHeaders.config.hstsValue", $salesChannelId);
-            if (!empty($hstsValue)) {
+            if (!empty($hstsValue) && is_string($hstsValue)) {
                 $response->headers->set("Strict-Transport-Security", $hstsValue);
             }
         }
@@ -87,7 +87,7 @@ class HeaderService
 
         if (!$response->headers->has("X-Frame-Options")) {
             $xFrameOptionsValue = $config->get("EcomSecSecurityHeaders.config.xFrameOptionsValue", $salesChannelId);
-            if (!empty($xFrameOptionsValue)) {
+            if (!empty($xFrameOptionsValue) && is_string($xFrameOptionsValue)) {
                 $response->headers->set("X-Frame-Options", $xFrameOptionsValue);
             }
         }
@@ -102,7 +102,7 @@ class HeaderService
 
         if (!$response->headers->has("X-Content-Type-Options")) {
             $xContentTypeOptionsValue = $config->get("EcomSecSecurityHeaders.config.xContentTypeOptionsValue", $salesChannelId);
-            if (!empty($xContentTypeOptionsValue)) {
+            if (!empty($xContentTypeOptionsValue) && is_string($xContentTypeOptionsValue)) {
                 $response->headers->set("X-Content-Type-Options", $xContentTypeOptionsValue);
             }
         }
@@ -117,7 +117,7 @@ class HeaderService
 
         if (!$response->headers->has("Referrer-Policy")) {
             $referrerPolicyValue = $config->get("EcomSecSecurityHeaders.config.referrerPolicyValue", $salesChannelId);
-            if (!empty($referrerPolicyValue)) {
+            if (!empty($referrerPolicyValue) && is_string($referrerPolicyValue)) {
                 $response->headers->set("Referrer-Policy", $referrerPolicyValue);
             }
         }

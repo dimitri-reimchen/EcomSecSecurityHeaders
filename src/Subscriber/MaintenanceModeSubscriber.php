@@ -32,6 +32,7 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
     public function addSecurityHeadersToMaintenance(ResponseEvent $event): void
     {
         $response = $event->getResponse();
+        $request = $event->getRequest();
         
         // Prüfen, ob es sich um eine Wartungsseite handelt
         // Wartungsseiten haben typischerweise einen 503 Status-Code
@@ -41,6 +42,6 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
         
         // Für Wartungsseiten verwenden wir die globale Konfiguration
         // da der SalesChannel-Kontext möglicherweise nicht verfügbar ist
-        $this->headerService->addSecurityHeaders($response, $this->systemConfigService, null);
+        $this->headerService->addSecurityHeaders($response, $request, $this->systemConfigService, null);
     }
 }
