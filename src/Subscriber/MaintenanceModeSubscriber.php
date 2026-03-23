@@ -2,11 +2,11 @@
 
 namespace EcomSec\SecurityHeaders\Subscriber;
 
+use EcomSec\SecurityHeaders\Service\HeaderService;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface; // Diese Zeile fehlte!
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use EcomSec\SecurityHeaders\Service\HeaderService;
 
 class MaintenanceModeSubscriber implements EventSubscriberInterface
 {
@@ -24,8 +24,7 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            // Höchste Priorität, um sicherzustellen, dass es vor allen anderen Subscribern ausgeführt wird
-            KernelEvents::RESPONSE => ['addSecurityHeadersToMaintenance', 9999]
+            KernelEvents::RESPONSE => ['addSecurityHeadersToMaintenance', 9999],
         ];
     }
 
@@ -33,15 +32,13 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
         $request = $event->getRequest();
-        
-        // Prüfen, ob es sich um eine Wartungsseite handelt
-        // Wartungsseiten haben typischerweise einen 503 Status-Code
+
+        // Only apply to maintenance pages (503 status code)
         if ($response->getStatusCode() !== 503) {
             return;
         }
-        
-        // Für Wartungsseiten verwenden wir die globale Konfiguration
-        // da der SalesChannel-Kontext möglicherweise nicht verfügbar ist
+
+        // Use global configuration as SalesChannel context may not be available
         $this->headerService->addSecurityHeaders($response, $request, $this->systemConfigService, null);
     }
 }

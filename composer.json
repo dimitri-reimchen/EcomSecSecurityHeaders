@@ -1,27 +1,47 @@
 {
     "name": "ecomsec/security-headers",
-    "description": "Security Headers Plugin for Shopware 6 - Adds essential security headers like CSP, HSTS, and X-Frame-Options to protect your shop.",
-    "version": "1.0.1",
+    "description": "Protect your Shopware store with professional HTTP security headers: CSP, HSTS, X-Frame-Options, Permissions-Policy and more.",
+    "version": "1.0.0",
     "type": "shopware-platform-plugin",
-    "license": "MIT",
+    "license": "proprietary",
+    "keywords": [
+        "shopware",
+        "security",
+        "security-headers",
+        "csp",
+        "hsts",
+        "x-frame-options",
+        "content-security-policy",
+        "http-headers"
+    ],
     "authors": [
         {
-            "name": "Dimitri Reimchen",
-            "email": "contact@ecomsec.io"
+            "name": "EcomSec",
+            "email": "info@ecomsec.de",
+            "homepage": "https://ecomsec.de"
         }
     ],
     "require": {
-        "shopware/core": "~6.6.0 || ~6.7.0"
+        "shopware/core": "~6.7.0"
     },
     "extra": {
         "shopware-plugin-class": "EcomSec\\SecurityHeaders\\EcomSecSecurityHeaders",
+        "copyright": "(c) by Dimitri Reimchen / EcomSec",
         "label": {
             "de-DE": "EcomSec Security Headers",
             "en-GB": "EcomSec Security Headers"
         },
         "description": {
-            "de-DE": "Schützen Sie Ihren Shop durch professionelle Security-Header wie CSP, HSTS und X-Frame-Options. Einfach konfigurierbar und Shopware 6.7 bereit.",
-            "en-GB": "Protect your shop with professional security headers like CSP, HSTS, and X-Frame-Options. Easy to configure and Shopware 6.7 ready."
+            "de-DE": "Schützen Sie Ihren Shopware-Shop mit professionellen HTTP-Security-Headern: CSP, HSTS, X-Frame-Options, Permissions-Policy und mehr. Einfach konfigurierbar im Admin-Bereich.",
+            "en-GB": "Protect your Shopware store with professional HTTP security headers: CSP, HSTS, X-Frame-Options, Permissions-Policy and more. Easy to configure in the admin panel."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://ecomsec.de",
+            "en-GB": "https://ecomsec.de"
+        },
+        "supportLink": {
+            "de-DE": "https://ecomsec.de/support",
+            "en-GB": "https://ecomsec.de/support"
         }
     },
     "autoload": {

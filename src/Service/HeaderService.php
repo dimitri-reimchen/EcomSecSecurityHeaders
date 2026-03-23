@@ -21,104 +21,103 @@ class HeaderService
 
     private function addContentSecurityPolicy(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.cspEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.cspEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        $cspValue = $config->get("EcomSecSecurityHeaders.config.cspValue", $salesChannelId);
-        if (!empty($cspValue) && is_string($cspValue) && !$response->headers->has("Content-Security-Policy")) {
-            $response->headers->set("Content-Security-Policy", $cspValue);
+        $cspValue = $config->get('EcomSecSecurityHeaders.config.cspValue', $salesChannelId);
+        if (!empty($cspValue) && is_string($cspValue) && !$response->headers->has('Content-Security-Policy')) {
+            $response->headers->set('Content-Security-Policy', $cspValue);
         }
     }
 
     private function addContentSecurityPolicyReportOnly(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.cspReportOnlyEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.cspReportOnlyEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        $cspReportOnlyValue = $config->get("EcomSecSecurityHeaders.config.cspReportOnlyValue", $salesChannelId);
-        if (!empty($cspReportOnlyValue) && is_string($cspReportOnlyValue) && !$response->headers->has("Content-Security-Policy-Report-Only")) {
-            $response->headers->set("Content-Security-Policy-Report-Only", $cspReportOnlyValue);
+        $cspReportOnlyValue = $config->get('EcomSecSecurityHeaders.config.cspReportOnlyValue', $salesChannelId);
+        if (!empty($cspReportOnlyValue) && is_string($cspReportOnlyValue) && !$response->headers->has('Content-Security-Policy-Report-Only')) {
+            $response->headers->set('Content-Security-Policy-Report-Only', $cspReportOnlyValue);
         }
     }
 
     private function addPermissionsPolicy(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.permissionsPolicyEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.permissionsPolicyEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        $permissionsPolicyValue = $config->get("EcomSecSecurityHeaders.config.permissionsPolicyValue", $salesChannelId);
-        if (!empty($permissionsPolicyValue) && is_string($permissionsPolicyValue) && !$response->headers->has("Permissions-Policy")) {
-            $response->headers->set("Permissions-Policy", $permissionsPolicyValue);
+        $permissionsPolicyValue = $config->get('EcomSecSecurityHeaders.config.permissionsPolicyValue', $salesChannelId);
+        if (!empty($permissionsPolicyValue) && is_string($permissionsPolicyValue) && !$response->headers->has('Permissions-Policy')) {
+            $response->headers->set('Permissions-Policy', $permissionsPolicyValue);
         }
     }
 
     private function addStrictTransportSecurity(Response $response, Request $request, SystemConfigService $config, ?string $salesChannelId): void
     {
-        // Use native Symfony method to check for secure connection
         if (!$request->isSecure()) {
             return;
         }
-        
-        $enabled = $config->get("EcomSecSecurityHeaders.config.hstsEnabled", $salesChannelId);
+
+        $enabled = $config->get('EcomSecSecurityHeaders.config.hstsEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        if (!$response->headers->has("Strict-Transport-Security")) {
-            $hstsValue = $config->get("EcomSecSecurityHeaders.config.hstsValue", $salesChannelId);
+        if (!$response->headers->has('Strict-Transport-Security')) {
+            $hstsValue = $config->get('EcomSecSecurityHeaders.config.hstsValue', $salesChannelId);
             if (!empty($hstsValue) && is_string($hstsValue)) {
-                $response->headers->set("Strict-Transport-Security", $hstsValue);
+                $response->headers->set('Strict-Transport-Security', $hstsValue);
             }
         }
     }
 
     private function addXFrameOptions(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.xFrameOptionsEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.xFrameOptionsEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        if (!$response->headers->has("X-Frame-Options")) {
-            $xFrameOptionsValue = $config->get("EcomSecSecurityHeaders.config.xFrameOptionsValue", $salesChannelId);
+        if (!$response->headers->has('X-Frame-Options')) {
+            $xFrameOptionsValue = $config->get('EcomSecSecurityHeaders.config.xFrameOptionsValue', $salesChannelId);
             if (!empty($xFrameOptionsValue) && is_string($xFrameOptionsValue)) {
-                $response->headers->set("X-Frame-Options", $xFrameOptionsValue);
+                $response->headers->set('X-Frame-Options', $xFrameOptionsValue);
             }
         }
     }
 
     private function addXContentTypeOptions(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.xContentTypeOptionsEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.xContentTypeOptionsEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        if (!$response->headers->has("X-Content-Type-Options")) {
-            $xContentTypeOptionsValue = $config->get("EcomSecSecurityHeaders.config.xContentTypeOptionsValue", $salesChannelId);
+        if (!$response->headers->has('X-Content-Type-Options')) {
+            $xContentTypeOptionsValue = $config->get('EcomSecSecurityHeaders.config.xContentTypeOptionsValue', $salesChannelId);
             if (!empty($xContentTypeOptionsValue) && is_string($xContentTypeOptionsValue)) {
-                $response->headers->set("X-Content-Type-Options", $xContentTypeOptionsValue);
+                $response->headers->set('X-Content-Type-Options', $xContentTypeOptionsValue);
             }
         }
     }
 
     private function addReferrerPolicy(Response $response, SystemConfigService $config, ?string $salesChannelId): void
     {
-        $enabled = $config->get("EcomSecSecurityHeaders.config.referrerPolicyEnabled", $salesChannelId);
+        $enabled = $config->get('EcomSecSecurityHeaders.config.referrerPolicyEnabled', $salesChannelId);
         if (!$enabled) {
             return;
         }
 
-        if (!$response->headers->has("Referrer-Policy")) {
-            $referrerPolicyValue = $config->get("EcomSecSecurityHeaders.config.referrerPolicyValue", $salesChannelId);
+        if (!$response->headers->has('Referrer-Policy')) {
+            $referrerPolicyValue = $config->get('EcomSecSecurityHeaders.config.referrerPolicyValue', $salesChannelId);
             if (!empty($referrerPolicyValue) && is_string($referrerPolicyValue)) {
-                $response->headers->set("Referrer-Policy", $referrerPolicyValue);
+                $response->headers->set('Referrer-Policy', $referrerPolicyValue);
             }
         }
     }

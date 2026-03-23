@@ -1,0 +1,22 @@
+# Development directories
+vendor/
+bin/
+docs/
+tests/
+var/
+.github/
+
+# Development & build files
+.gitignore
+.shopwareignore
+phpunit.xml
+phpunit.xml.dist
+phpstan.neon
+phpstan.neon.dist
+build.sh
+
+# Documentation (not needed in store ZIP)
+README.md
+CHANGELOG.md
+SECURITY.md
+TODO.md
